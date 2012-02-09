@@ -1,0 +1,149 @@
+\documentclass[11pt]{article}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{epsfig}
+\usepackage{psfig}
+
+\newcommand{\handout}[5]{
+  \noindent
+  \begin{center}
+  \framebox{
+    \vbox{
+      \hbox to 5.78in { {\bf 6.851: Advanced Data Structures } \hfill #2 }
+      \vspace{4mm}
+      \hbox to 5.78in { {\Large \hfill #5  \hfill} }
+      \vspace{2mm}
+      \hbox to 5.78in { {\em #3 \hfill #4} }
+    }
+  }
+  \end{center}
+  \vspace*{4mm}
+}
+
+\newcommand{\lecture}[4]{\handout{#1}{#2}{#3}{Scribe: #4}{Lecture #1}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{assumption}[theorem]{Assumption}
+
+% 1-inch margins, from fullpage.sty by H.Partl, Version 2, Dec. 15, 1988.
+\topmargin 0pt
+\advance \topmargin by -\headheight
+\advance \topmargin by -\headsep
+\textheight 8.9in
+\oddsidemargin 0pt
+\evensidemargin \oddsidemargin
+\marginparwidth 0.5in
+\textwidth 6.5in
+
+\parindent 0in
+\parskip 1.5ex
+%\renewcommand{\baselinestretch}{1.25}
+
+\begin{document}
+
+\lecture{2 --- 02/09, 2012}{Spring 2012}{Prof.\ Erik Demaine}{Erek Speed, Victor Jakubiuk}
+
+\section{Overview}
+
+The main idea of the persistent data structures is that when you make a change in the past, you get an entirely new universe. A more science-fiction approach to time travel is that you can make changes in the past and see its result not only in the current state of the data structure, but also all the changes in between the past and now.
+
+We maintain one timeline of updates and queries for a persistent data structure:
+
+[img of a timeline]
+
+blah blah blah
+
+Normally, we always append the operations to the end of the timeline (present time). With retroactive data structures we can do that in the past too.
+
+\section{Retroactivity}
+
+The following operations are supported by retroactive DS:
+
+\begin{itemize}
+\item {\em Insert(t, update)} - inserts operation ``update'' at time $t$
+\item {\em Delete(t)} - deletes the operation at time $t$
+\item {\em Query(t, query)} queries the DS with a ``query'' at time $t$
+\end{itemize}
+
+Uppercase Insert indicates an operation on retroactive DS, lowercase is the operation on the actual DS.
+
+You can think of time $t$ as integers, but a better approach is to use an order-maintanance DS to avoid using non-integers (in case you want to insert an operation between $t$ and $t+1$), as mentioned in the first lecture.
+
+There are three types of retroactivity:
+\begin{itemize}
+\item {\em Partial} - Query always done at $t = \infty$ (now)
+\item {\em Full} - Query at any time $t$ (possibly in the past)
+\item {\em Nonoblivious} - 
+\end{itemize}
+
+
+
+\subsection{Blah blah blah}
+Here is a subsection.
+
+\subsubsection{Blah blah blah}
+Here is a subsubsection. You can use these as well.
+
+\subsection{Using Boldface}
+Make sure to use lots of boldface.
+
+\paragraph{Question:}
+How would you use boldface?
+
+\paragraph{Example:}
+This is an example showing how to use boldface to 
+help organize your lectures.
+
+
+\paragraph{Some Formatting.}
+Here is some formatting that you can use in your notes:
+\begin{itemize}
+\item {\em Item One} -- This is the first item.
+\item {\em Item Two} -- This is the second item.
+\item \dots and here are other items.
+\end{itemize}
+
+If you need to number things, you can use this style:
+\begin{enumerate}
+\item {\em Item One} -- Again, this is the first item.
+\item {\em Item Two} -- Again, this is the second item.
+\item \dots and here are other items.
+\end{enumerate}
+
+\paragraph{Bibliography.}
+Please give real bibliographical citations for the papers that we
+mention in class. See below for how to include a bibliography section.
+If you use BibTeX, integrate the .bbl file into your .tex
+source. You should reference papers like this: ``The FKS
+dictionary originates in a paper by Fredman, Koml\'{o}s and
+Szemer\'{e}di \cite{fks}.'' In general, the name of the authors should
+appear in text at most once (for the first citation); further
+citations look like: ``Our proof follows that of \cite{fks}''.
+
+Take a look at previous lectures (TeX files are available) to see the
+details. A excellent source for bibliographical citations is
+DBLP. Just Google DBLP and an author's name.
+
+
+%\bibliography{mybib}
+\bibliographystyle{alpha}
+
+\begin{thebibliography}{77}
+
+\bibitem{fks}
+M. Fredman, J. Koml\'{o}s, E. Szemer\'{e}di,
+\emph{Storing a Sparse Table with $O(1)$ Worst Case Access Time},
+Journal of the ACM, 31(3):538-544, 1984.
+
+\end{thebibliography}
+
+\end{document}
