@@ -93,7 +93,7 @@ Now, let us move onto some more positive results.  Priority queues represent a D
 	It is possible to implement a partially retroactive priority queue with only $O(\lg n)$ overhead per partially retroactive operation.
 \end{claim}
 
-Because of the presence of $delete$-$min$, the set of operations on priority queues is non-commutative.  The order of updates now clearly matters, and $Insert$ing a $delete$-$min$ retroactively has the potential to cause a chain reaction which changes everything that comes afterward. \\
+Because of the presence of $delete$-$min$, the set of operations on priority queues is non-commutative.  The order of updates now clearly matters, and $Insert$ing a $delete$-$min$ retroactively has the potential to cause a chain reaction which changes everything that comes afterward. Partially retroactive priority queues are described in a paper by Demaine, Iacono, and Langerman \cite{dil}. \\
 
 To develop an intuition for how our DS changes given a retroactive operation, it is helpful to plot it on a two dimensional plane.  The $x$-axis represents time and $y$-axis represents key value. Every $insert(t,k)$ operation creates a horizontal ray that starts at point $(t,k)$ and shoots to the right (See Fig. \ref{fig-pqinsert}).
 
@@ -178,9 +178,35 @@ With that transformation, we only need to maintain three data structures which w
 \begin{itemize}
 \item We will store $Q_{now}$ as a balanced BST.  It will be changed once per update.
 \item We will store a balanced BST where the leaves equal insertions, ordered by time, and augmented with $\forall \text{ node } x: \max\left\{ k' \notin Q_{now} \mid k' \text{ inserted in } x \text{'s subtree} \right\}$.
-\item 
+
+\item Finally, we will store a balanced BST where the leaves store all updates, ordered by time, and augmented by the following: \\
+
+\[
+\left\{ \begin{array}{ll}
+$0$ & \mbox{for inserts with $k \in Q_{now}$} \\
+$+1$ & \mbox{for other inserts, $k \notin Q_{now}$} \\
+$-1$ & \mbox{for $delete$-$min$s} \\
+\end{array}
+\right. \\
+\]
+
+as well as subtree sums.
 
 \end{itemize}
+
+Now, we have to uses these data structures to execute our $Insert$.  This can be done in $O(\lg n)$ with the following steps.
+
+\begin{itemize}
+	\item First, for an $Insert$ at time $t$ we must find the preceding bridge at time $t'$.  Using our BBST of all updates, we know that a bridge is a time(leaf) at which has a prefix of updates summing to 0 (with respect to the augmentation). This is possible in $O(\lg n)$ time due to the stored subtree sums.  In brief, traverse the tree to find $t$, calculating the prefix sum as you descend.  If $t$ has a prefix sum of $0$ then we're done. Otherwise, walk back up the tree to find the preceding update with a prefix sum of $0$.
+
+\item Next, in our BBST of insertions we descend to $t'$ and work back up the tree looking for the maximum node not already in $Q_{now}$.  Because of the augmentation we store, this can be done in $O(\lg n)$ time.
+
+\item Finally, there are a collection of steps related to updating the data structures once we make our update, but given our data structures it should be easy to convince yourself that it can be done in $O(\lg n)$ time.
+\end{itemize}
+
+\subsubsection{Other Structures}
+
+
 
 \subsection{Blah blah blah}
 Here is a subsection.
