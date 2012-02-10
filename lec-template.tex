@@ -291,8 +291,16 @@ Now, we have to uses these data structures to execute our $Insert$.  This can be
 \end{itemize}
 
 \subsubsection{Other Structures}
+\begin{itemize}
+\item{\emph{queue:}} $O(1)$ partial, $O(\lg m)$ full
+\item{\emph{deque:}} $O(\lg m)$ full
+\item{\emph{union-find (incremental connectivity):}} $O(\lg m)$ full
+\item{\emph{priority-queue:}} $O(\sqrt{m}\lg m)$ full. This comes from the fact that any partially retroactive DS can be made fully retroactive with a $O(\sqrt{m})$ factor overhead.  It's an open problem whether or not we can do better.
+\item{\emph{successor:}} This was actually the motivating problem for retroactivity.  $O(\lg m)$ partial because it's a search problem. $O(\lg^2 m)$ full because it's also decomposable.  However, Giora and Kaplan gave us a better solution of $O(\lg m)$ \cite{gk}!  This new algorithm uses many data structures we'll learn about later; including fractional cascading (L3) and vam Emde Boas (L11).
 
+\end{itemize}
 
+\subsection{Nonoblivious Retroactivity
 
 \subsection{Blah blah blah}
 Here is a subsection.
@@ -345,10 +353,11 @@ DBLP. Just Google DBLP and an author's name.
 
 \begin{thebibliography}{77}
 
-\bibitem{fks}
-M. Fredman, J. Koml\'{o}s, E. Szemer\'{e}di,
-\emph{Storing a Sparse Table with $O(1)$ Worst Case Access Time},
-Journal of the ACM, 31(3):538-544, 1984.
+\bibitem{dil}
+Erik D. Demaine, John Iacono, Stefan Langerman: \emph{Retroactive data structures}. SODA 2004: 281-290
+
+\bibitem{gk}
+Yoav Giora, Haim Kaplan: \emph{Optimal dynamic vertical ray shooting in rectilinear planar subdivisions} ACM Transactions on Algorithms 5(3) (2009)
 
 \end{thebibliography}
 
