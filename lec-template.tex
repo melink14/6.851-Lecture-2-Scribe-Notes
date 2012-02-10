@@ -62,7 +62,7 @@ We maintain one timeline of updates and queries for a persistent data structure:
 
 blah blah blah
 
-Normally, we always append the operations to the end of the timeline (present time). With retroactive data structures we can do that in the past too.
+Normally, we always append the operations at the end of the timeline (present time). With retroactive data structures we can do that in the past too.
 
 \section{Retroactivity}
 
@@ -76,14 +76,79 @@ The following operations are supported by retroactive DS:
 
 Uppercase Insert indicates an operation on retroactive DS, lowercase is the operation on the actual DS.
 
-You can think of time $t$ as integers, but a better approach is to use an order-maintanance DS to avoid using non-integers (in case you want to insert an operation between $t$ and $t+1$), as mentioned in the first lecture.
+You can think of time $t$ as integers, but a better approach is to use an order-maintanance DS to avoid using non-integers (in case you want to insert an operation between times $t$ and $t+1$), as mentioned in the first lecture.
 
 There are three types of retroactivity:
 \begin{itemize}
 \item {\em Partial} - Query always done at $t = \infty$ (now)
 \item {\em Full} - Query at any time $t$ (possibly in the past)
-\item {\em Nonoblivious} - 
+\item {\em Nonoblivious} - Insert, Delete, Query at any time $t$, also if an operation modifies DS, we must say which future queries are changed.
 \end{itemize}
+
+\subsection{Easy case with commutativity and inversions}
+
+Assume the following hold:
+\begin{itemize}
+\item {\em Commutative updates:} $x.y = y.x$ ($x$ followed by $y$ is the same as $y$ followed by $x$), that is the updates can be reordered $\Rightarrow$ Insert(t, op) = Insert(now, op).
+\item {\em Invertible updates:} There exist operations $x^{-1}$, such that $x.x^{-1} = \empty \Rightarrow$ Delete(t, op) = Insert(now, op$^{-1}$)
+\end{itemize}
+
+\subsubsection{Partial retroactivity}
+
+These two assumptions allow us to solve some problems easily:
+\begin{itemize}
+\item {\em hashing} 
+\item {\em array} with operation $A[i] += \Delta$ (but no direct assignment)
+\end{itemize}
+
+\subsection{Full retroactivity}
+
+First, lets define the {\bf search problem}: maintain set $S$ of objects, subject to insert, delete, query($x, S$).
+
+{\bf Decomposable search problem} [1980, 2007]: same as the search problem, with a restriction that the query must satisfy:
+query($x, A \Cup B) = f($query$(x, A), $query($x, B))$, for some function $f$ computed in $O(1)$ (sets $A and B$ may overlap). Examples of problems with such a function include:
+
+\begin{itemize}
+\item {\em Dynamic nearest neighbor}
+\item {\em Successor on a line}
+\item {\em Point location}
+\end{itemize}
+
+Claim: Full Retroactivity for decomposable search problems (with commutativity and inversions) in $O(\lg{m})$ factor overhead both in time and space (where $m$ is the number of operations): via {\bf segment tree} [1980, Bentley & Saxon (??)]
+
+What is a segment tree?
+
+[img of a st, ~16min of the video]
+
+We want to build a balanced search tree on time, leaves are time. Every element ``lives'' in the data structure on the interval of time, corresponding to its insertion and deletion. Each element appears in $\log{n}$ nodes.
+
+To query on this tree at time $t$, we want to know what operations have been done on this tree from the beginning of time to $t$. Because the query is decomposable, we can look at $\log{n}$ different nodes and combine the results (using function $f$). 
+
+Update: Partition interval of time
+Query(t): walk up from leaf
+
+\subsection{General case of full retroactivity}
+
+{\bf Roll back method}: write down the chain of operations and queries; change $r$ time units in the past with factor $O(r)$ overhead. 
+
+That's the best we can do in general. 
+
+Lower bound: $\Omega (r)$ overhead necessary.
+Proof: Data Structure maintains 2 values (registers): $X$ and $Y$, initially $\empty$. The following operations are supported: $X = x$, $y += \Delta$, $y = x.y$, query '$y?$'. Perform the following operations (Cramer's rule):
+$Y += a_n$,
+$X = X.Y$, 
+$Y += a_{n-1}$, 
+$X = X.y$, 
+\ldots
+$Y += a_0$,
+
+
+which is equivalent to computing $Y = a_n X^{n} + a_{n-1} X^{n-1} + ... + a_0$. 
+Now, execute Insert($t = 0, X=x$), which changes where the polynomial is evaluated. This cannot be done faster than re-evaluating the polynomial. In history-independent algebraict decision tree, for any field, independent of pre-processing of the coefficients, need $\Omega(n)$ field operations (result from 2001), where $n$ is the degree of the polynomial.
+
+
+
+
 
 
 
