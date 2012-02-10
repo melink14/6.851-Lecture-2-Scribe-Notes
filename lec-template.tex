@@ -290,7 +290,7 @@ Now, we have to uses these data structures to execute our $Insert$.  This can be
 \item Finally, there are a collection of steps related to updating the data structures once we make our update, but given our data structures it should be easy to convince yourself that it can be done in $O(\lg n)$ time.
 \end{itemize}
 
-\subsubsection{Other Structures}
+\subsection{Other Structures}
 \begin{itemize}
 \item{\emph{queue:}} $O(1)$ partial, $O(\lg m)$ full
 \item{\emph{deque:}} $O(\lg m)$ full
@@ -300,7 +300,23 @@ Now, we have to uses these data structures to execute our $Insert$.  This can be
 
 \end{itemize}
 
-\subsection{Nonoblivious Retroactivity
+\subsection{Nonoblivious Retroactivity}
+
+Nonoblivious retroactivity was introduced in a paper by Acar, Blelloch, and Tangwongsan to answer the question, "What about my queries? \cite{abt}"  Usually, when we use a data structure algorithmically (e.g. priority queue in Dijkstra) the updates we perform depend on the results of the queries.
+
+To solve this problem we can simply add queries to our time line (fig. \ref{fig-nrtl}).
+
+\begin{figure}[ht]
+	\rule{\textwidth}{0.005in}
+  \begin{center}
+    \scalebox{.5}{\includegraphics[width=6in]{nrtl}}
+  \end{center}
+
+  \caption{\small Time line of updates \emph{and} queries.}
+  \label{fig-nrtl}
+	\rule{\textwidth}{0.005in}
+\end{figure}
+
 
 \subsection{Blah blah blah}
 Here is a subsection.
@@ -358,6 +374,8 @@ Erik D. Demaine, John Iacono, Stefan Langerman: \emph{Retroactive data structure
 
 \bibitem{gk}
 Yoav Giora, Haim Kaplan: \emph{Optimal dynamic vertical ray shooting in rectilinear planar subdivisions} ACM Transactions on Algorithms 5(3) (2009)
+
+\bibitem{abt} Umut A. Acar, Guy E. Blelloch, Kanat Tangwongsan: \emph{Kinetic 3D convex hulls via self-adjusting computation}. Symposium on Computational Geometry 2007: 129-130
 
 \end{thebibliography}
 
