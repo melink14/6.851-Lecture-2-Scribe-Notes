@@ -59,7 +59,7 @@ The main idea of persistent data structures is that when a change is made in the
 
 We maintain one timeline of updates and queries for a persistent data structure:
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
   \centering
   \leavevmode
   \scalebox{.5}{\includegraphics{timeline.png}}
@@ -67,7 +67,7 @@ We maintain one timeline of updates and queries for a persistent data structure:
 
 
 
-Usually, operations are appended at the end of the timeline (present time). With retroactive data structures we can do that in the past too.
+Usually, operations are appended at the end of the time line (present time). With retroactive data structures we can do that in the past too.
 
 \section{Retroactivity}
 
@@ -243,7 +243,7 @@ However, since we're only requiring partial retroactivity we only need to determ
 	We define time $t$ to be a bridge if $Q_t \subseteq Q_{now}$.
 \end{definition}
 
-This simply means that all of the elements at a bridge $t'$ are also present at $t_{now}$.  You can think of bridges as separating the chaotic chain-reactions that happen during retroactive $Insert$s as seen in figure \ref{fig-pqbridge}.
+This simply means that all of the elements present at a bridge $t'$ are also present at $t_{now}$.  You can think of bridges as separating the chaotic chain-reactions that happen during retroactive operations as seen in figure \ref{fig-pqbridge}.
 
 If $t'$ is the bridge preceding time $t$, then \\ $\max \left\{ k' \mid k' \text{ deleted at time} \ge t \right\} = \max \left\{ k' \notin Q_{now} \mid k' \text{ inserted at time} \ge t' \right\}$
 
@@ -302,7 +302,7 @@ Now, we have to uses these data structures to execute our $Insert$.  This can be
 
 \subsection{Nonoblivious Retroactivity}
 
-Nonoblivious retroactivity was introduced in a paper by Acar, Blelloch, and Tangwongsan to answer the question, "What about my queries? \cite{abt}"  Usually, when we use a data structure algorithmically (e.g. priority queue in Dijkstra) the updates we perform depend on the results of the queries.
+Nonoblivious retroactivity was introduced in a paper by Acar, Blelloch, and Tangwongsan to answer the question, ``What about my queries? \cite{abt}''  Usually, when we use a data structure algorithmically (e.g. priority queue in Dijkstra) the updates we perform depend on the results of the queries.
 
 To solve this problem we can simply add queries to our time line (fig. \ref{fig-nrtl}).
 
@@ -325,13 +325,26 @@ After fixing each error, we can go back to using our retroactive DS in the usual
 
 Because we have retroactive queries now, we separate the query and updates into different operations.  Our matching retroactive queries will be Insert, Deleate, and Min.  We will visualize our data structure using a similar 2D plane as before as seen in figure \ref{fig-nrpq}.
 
+\begin{figure}[ht]
+	\rule{\textwidth}{0.005in}
+  \begin{center}
+    \scalebox{.5}{\includegraphics[width=6in]{nrpq}}
+  \end{center}
+
+  \caption{\small 2D representation of DS.  $Insert$ing an $insert$ leads to crossings as shown.  $Insert$ing a $delete$ leads to floating errors as shown.}
+  \label{fig-nrpq}
+	\rule{\textwidth}{0.005in}
+\end{figure}
+
 If we Insert an insert as shown in fig \ref{fig-nrpq} then we get errors at each crossing.  In our DS we will keep the `incorrect' picture, but keep track of the errors.  We will tell the algorithm where the first error (crossing) is and it will potentially Delete the query and re-Insert the operation thus getting the correct result.
 
 However, we don't jump to the next error after this is done. Our assumption is that the algorithm will, based on the new query, do various updates which may even delete the new element before any further crossings.
 
 Deleting a deletion is similar to Inserting an insertion as they both cause crossing errors.
 
-The other two cases are Deleting an insertion and Inserting a deletion which cause floating errors.  Both of these can be seen in figure \ref{fig-nrpq}.
+The other two cases are Deleting an insertion and Inserting a deletion which cause floating errors.  These are situations where queries return `floating' values because they refer to a segment which is no longer there.
+
+Both crossing and floating errors can be seen in figure \ref{fig-nrpq}.
 
 We maintain the following two details
 
@@ -344,20 +357,6 @@ We maintain the following two details
 
 The other cases are similar but you also need to use rightward ray shooting.
 
-\paragraph{Bibliography.}
-Please give real bibliographical citations for the papers that we
-mention in class. See below for how to include a bibliography section.
-If you use BibTeX, integrate the .bbl file into your .tex
-source. You should reference papers like this: ``The FKS
-dictionary originates in a paper by Fredman, Koml\'{o}s and
-Szemer\'{e}di \cite{fks}.'' In general, the name of the authors should
-appear in text at most once (for the first citation); further
-citations look like: ``Our proof follows that of \cite{fks}''.
-
-Take a look at previous lectures (TeX files are available) to see the
-details. A excellent source for bibliographical citations is
-DBLP. Just Google DBLP and an author's name.
-
 %\bibliography{mybib}
 \bibliographystyle{alpha}
 
@@ -366,10 +365,16 @@ DBLP. Just Google DBLP and an author's name.
 \bibitem{dil}
 Erik D. Demaine, John Iacono, Stefan Langerman: \emph{Retroactive data structures}. SODA 2004: 281-290
 
+\bibitem{dil2}
+Erik D. Demaine, John Iacono, Stefan Langerman: \emph{Retroactive data structures}. ACM Transactions on Algorithms 3(2): (2007)
+
 \bibitem{gk}
 Yoav Giora, Haim Kaplan: \emph{Optimal dynamic vertical ray shooting in rectilinear planar subdivisions} ACM Transactions on Algorithms 5(3) (2009)
 
 \bibitem{abt} Umut A. Acar, Guy E. Blelloch, Kanat Tangwongsan: \emph{Kinetic 3D convex hulls via self-adjusting computation}. Symposium on Computational Geometry 2007: 129-130
+
+\bibitem{fhm}
+Gudmund Skovbjerg Frandsen, Gudmund Skovbjerg Frandsen, Peter Bro Miltersen: \emph{Lower Bounds for Dynamic Algebraic Problems}. Information and Computation 171(2): 333-349 (2001)
 
 \end{thebibliography}
 
