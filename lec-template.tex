@@ -120,10 +120,10 @@ query($x, A \cup B) = f($query$(x, A), $query($x, B))$, for some function $f$ co
 \end{itemize}
 
 \begin{claim}
-Full Retroactivity for decomposable search problems (with commutativity and inversions) can be done in $O(\lg{m})$ factor overhead both in time and space (where $m$ is the number of operations) using {\bf segment tree} [1980, Bentley and Saxon (??)]
+Full Retroactivity for decomposable search problems (with commutativity and inversions) can be done in $O(\lg{m})$ factor overhead both in time and space (where $m$ is the number of operations) using {\bf segment tree} [1980, Bentley and Saxe \cite{bs}]
 \end{claim}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
   \centering
   \leavevmode
   \scalebox{.5}{\includegraphics{segment_tree.png}}
@@ -152,7 +152,7 @@ $$Y += a_n, X = X.Y, Y += a_{n-1}, X = X.Y, \ldots, Y += a_0$$
 
 which is equivalent to computing $$Y = a_n X^{n} + a_{n-1} X^{n-1} + ... + a_0$$
 
-Now, execute Insert($t = 0, X=x$), which changes where the polynomial is evaluated. This cannot be done faster than re-evaluating the polynomial. In history-independent algebraict decision tree, for any field, independent of pre-processing of the coefficients, need $\Omega(n)$ field operations (result from 2001), where $n$ is the degree of the polynomial.
+Now, execute Insert($t = 0, X=x$), which changes where the polynomial is evaluated. This cannot be done faster than re-evaluating the polynomial. In history-independent algebraic decision tree, for any field, independent of pre-processing of the coefficients, need $\Omega(n)$ field operations (result from 2001), where $n$ is the degree of the polynomial.
 
 \subsection{Cell-probe problem}
 
@@ -375,6 +375,9 @@ Yoav Giora, Haim Kaplan: \emph{Optimal dynamic vertical ray shooting in rectilin
 
 \bibitem{fhm}
 Gudmund Skovbjerg Frandsen, Gudmund Skovbjerg Frandsen, Peter Bro Miltersen: \emph{Lower Bounds for Dynamic Algebraic Problems}. Information and Computation 171(2): 333-349 (2001)
+
+\bibitem{bs}
+Jon Louis Bentley, James B. Saxe: \emph{Decomposable Searching Problems I: Static-to-Dynamic Transformation}. J. Algorithms 1(4): 301-358 (1980)
 
 \end{thebibliography}
 
