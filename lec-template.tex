@@ -317,38 +317,32 @@ To solve this problem we can simply add queries to our time line (fig. \ref{fig-
 	\rule{\textwidth}{0.005in}
 \end{figure}
 
+The notion of dependence depends upon the user, but we still want to do something reasonable.  Now, when we make a retroactive update, we want our DS to tell us the location of the first query which changed as a result (e.g. the first error).  Then we only have to re-run the algorithm from that first erroneous query.  Our assumption is that the algorithm does this by $Delete$ing each wrong update and re-$Insert$ing the proper update in a strict left to right order such that each update is lower on the time-line than all errors.
 
-\subsection{Blah blah blah}
-Here is a subsection.
+After fixing each error, we can go back to using our retroactive DS in the usual way with no restrictions.
 
-\subsubsection{Blah blah blah}
-Here is a subsubsection. You can use these as well.
+\paragraph{Priority-Queues:} Our priority queues will support insert, delete, and min in $O(\lg m$ time per operation.
 
-\subsection{Using Boldface}
-Make sure to use lots of boldface.
+Because we have retroactive queries now, we separate the query and updates into different operations.  Our matching retroactive queries will be Insert, Deleate, and Min.  We will visualize our data structure using a similar 2D plane as before as seen in figure \ref{fig-nrpq}.
 
-\paragraph{Question:}
-How would you use boldface?
+If we Insert an insert as shown in fig \ref{fig-nrpq} then we get errors at each crossing.  In our DS we will keep the `incorrect' picture, but keep track of the errors.  We will tell the algorithm where the first error (crossing) is and it will potentially Delete the query and re-Insert the operation thus getting the correct result.
 
-\paragraph{Example:}
-This is an example showing how to use boldface to 
-help organize your lectures.
+However, we don't jump to the next error after this is done. Our assumption is that the algorithm will, based on the new query, do various updates which may even delete the new element before any further crossings.
 
+Deleting a deletion is similar to Inserting an insertion as they both cause crossing errors.
 
-\paragraph{Some Formatting.}
-Here is some formatting that you can use in your notes:
+The other two cases are Deleting an insertion and Inserting a deletion which cause floating errors.  Both of these can be seen in figure \ref{fig-nrpq}.
+
+We maintain the following two details
+
 \begin{itemize}
-\item {\em Item One} -- This is the first item.
-\item {\em Item Two} -- This is the second item.
-\item \dots and here are other items.
+\item First, we maintain the lowest leftmost crossing. This is equivalent to the leftmost lowest crossing. This is because of the invariant that all crossings involve horizontal segments with left endpoint left of \emph{all} errors.
+\item Next, we maintain the left most floating error on each row separately.
 \end{itemize}
 
-If you need to number things, you can use this style:
-\begin{enumerate}
-\item {\em Item One} -- Again, this is the first item.
-\item {\em Item Two} -- Again, this is the second item.
-\item \dots and here are other items.
-\end{enumerate}
+\paragraph{Example:} $Insert(t, \text{``min''})$.  When adding a new query what is the first ray that I hit.  This only involves the horizontal segments which are being inserted and deleting.  This problem is called \emph{upward ray shooting among dynamic segments}.  We can solve it in $O(\lg m)$ per operation.  This turns out to be the same as the fully retroactive successor problem mentioned earlier which was proved to be $O(\lg m)$ in \cite{gk}.
+
+The other cases are similar but you also need to use rightward ray shooting.
 
 \paragraph{Bibliography.}
 Please give real bibliographical citations for the papers that we
