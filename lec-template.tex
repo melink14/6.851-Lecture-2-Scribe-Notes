@@ -160,7 +160,7 @@ How many integers (words) of memory do you need to read to solve your problem? (
 
 Claim: $\Omega(\sqrt{\frac{r}{\lg{r}}})$.
 
-Open problem: $\Omega(r)$.
+{\bf OPEN} problem: $\Omega(r)$.
 
 Proof of the lower bound claim:
 \begin{itemize}
@@ -186,7 +186,7 @@ To develop an intuition for how our DS changes given a retroactive operation, it
 \begin{figure}[ht]
 	\rule{\textwidth}{0.005in}
   \begin{center}
-    \scalebox{.5}{\includegraphics[width=6in]{pqinsert.pdf}}
+    \scalebox{.8}{\includegraphics[width=6in]{pqinsert.pdf}}
   \end{center}
 
   \caption{\small Graph of priority queue featuring only a set of $insert$s}
@@ -201,7 +201,7 @@ This combinations of inserts and deletes creates a graph of nonintersecting upsi
 \begin{figure}[ht]
 	\rule{\textwidth}{0.005in}
   \begin{center}
-    \scalebox{.5}{\includegraphics[width=6in]{pqdel}}
+    \scalebox{.8}{\includegraphics[width=6in]{pqdel}}
   \end{center}
 
   \caption{\small Adding $del$-$min()$ operations leads to these upside down ``L'' shapes.}
@@ -214,7 +214,7 @@ The rest of the discussion will focus on $Insert(t,$``$insert(k)$''$)$.  It shou
 \begin{figure}[ht]
 	\rule{\textwidth}{0.005in}
   \begin{center}
-    \scalebox{.5}{\includegraphics[width=6in]{pqlview}}
+    \scalebox{.8}{\includegraphics[width=6in]{pqlview}}
   \end{center}
 
   \caption{\small An L view representation of a priority queue with a more complicated set of updates}
@@ -227,7 +227,7 @@ Consider the priority queue represented by figure \ref{fig-pqlview}.  It's simil
 \begin{figure}[ht]
 	\rule{\textwidth}{0.005in}
   \begin{center}
-    \scalebox{.5}{\includegraphics[width=6in]{pqretro}}
+    \scalebox{.8}{\includegraphics[width=6in]{pqretro}}
   \end{center}
 
   \caption{\small Retroactive inserts start at red dots and cause subsequent $delete$-$min$ operations to effect different elements as shown.}
@@ -251,7 +251,7 @@ If $t'$ is the bridge preceding time $t$, then \\ $\max \left\{ k' \mid k' \text
 \begin{figure}[ht]
 	\rule{\textwidth}{0.005in}
   \begin{center}
-    \scalebox{.5}{\includegraphics[width=6in]{pqbridge}}
+    \scalebox{.8}{\includegraphics[width=6in]{pqbridge}}
   \end{center}
 
   \caption{\small Bridges have been inserted as green wavy lines. Notice how they only cross elements present to the end of visible time.}
@@ -295,7 +295,7 @@ Now, we have to uses these data structures to execute our $Insert$.  This can be
 \item{\emph{queue:}} $O(1)$ partial, $O(\lg m)$ full
 \item{\emph{deque:}} $O(\lg m)$ full
 \item{\emph{union-find (incremental connectivity):}} $O(\lg m)$ full
-\item{\emph{priority-queue:}} $O(\sqrt{m}\lg m)$ full. This comes from the fact that any partially retroactive DS can be made fully retroactive with a $O(\sqrt{m})$ factor overhead.  It's an open problem whether or not we can do better.
+\item{\emph{priority-queue:}} $O(\sqrt{m}\lg m)$ full. This comes from the fact that any partially retroactive DS can be made fully retroactive with a $O(\sqrt{m})$ factor overhead.  It's an {\bf OPEN} problem whether or not we can do better.
 \item{\emph{successor:}} This was actually the motivating problem for retroactivity.  $O(\lg m)$ partial because it's a search problem. $O(\lg^2 m)$ full because it's also decomposable.  However, Giora and Kaplan gave us a better solution of $O(\lg m)$ \cite{gk}!  This new algorithm uses many data structures we'll learn about later; including fractional cascading (L3) and vam Emde Boas (L11).
 
 \end{itemize}
@@ -328,7 +328,7 @@ Because we have retroactive queries now, we separate the query and updates into 
 \begin{figure}[ht]
 	\rule{\textwidth}{0.005in}
   \begin{center}
-    \scalebox{.5}{\includegraphics[width=6in]{nrpq}}
+    \scalebox{.8}{\includegraphics[width=6in]{nrpq}}
   \end{center}
 
   \caption{\small 2D representation of DS.  $Insert$ing an $insert$ leads to crossings as shown.  $Insert$ing a $delete$ leads to floating errors as shown.}
